@@ -1,0 +1,46 @@
+
+#headline{
+	font-family: georgia;
+	font-size: 50px;
+	text-align: center;
+}
+body{
+	background-color: #E5E5E5;
+}
+#popupMessage{
+	font-family: georgia;
+	font-size: 30px;
+	text-align: center;
+}
+
+.btn {
+  background-color: DodgerBlue;
+  border: none; 
+  color: white; 
+  padding: 12px 16px; 
+  font-size: 16px; 
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: RoyalBlue;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+
+li{
+    padding: 5px;
+}
+
+#footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/ 
+            height: 40px;
+            background:  DodgerBlue;
+        }

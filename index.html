@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>KS Vehicle Rental Comp</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://kit.fontawesome.com/96fc7bf85a.js" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/cart-localstorage@1.1.4/dist/cart-localstorage.min.js" type="text/javascript"></script>
+	<link rel="shortcut icon" href="logo.png">
+</head>
+<body>
+<p id="headline">YOUR VEHICLE RENTAL COMPANY</p> 
+<div style="height: 40px;"></div>
+<center>
+	<button data-modal-target="#modal" class="btn" onclick="showModal()"><i class="fas fa-bell fa-2x"></i></button>
+	
+</center>
+<div id="mod" style="display: none;">
+    <div class="modal-header">
+      <div class="title">Active discounts for today</div>
+      <button data-close-button class="close-button" onclick="hideModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <ul>
+		  <li> If you rent two cars or one car and two motorcycles, then you can rent one bike for free</li>
+		  <li>If you have selected some bikes previously, then one of them becomes free</li>
+		  <li> If the you delete the free bike from the order, then the total price will be reduced by half of the bike’s rental price</li>
+		  <li> When an offering is withdrawn but given again, and no bike was added/deleted meanwhile, you get the previous offering back</li>
+		  <li> If the you delete some cars or motorcycles from the order that the offering threshold doesn't hold, then any offering will be withdrawn</li>
+		  <li>If you delete a free bike then you get a price reduction for a subsequent offering</li>
+
+
+
+	  </ul> 
+    </div>
+  </div>
+<div style="height: 20px;"></div>
+<p id="popupMessage">Limited discount offers exist due to COVID19 </p> 
+<div id="overlay"></div>
+  <div class="container">
+	 <h2>Vehicles</h2>
+
+		<div class="card-deck mt-4 mb-4 text-center">
+			<div class="card mb-4 shadow-sm">
+				<div class="card-header">
+					<h4 class="my-0 font-weight-normal">Car</h4>
+				</div>
+				<div class="card-body">
+					<h1 class="card-title pricing-card-title">€300</h1>
+					<button type="button" class="btn btn-block btn-outline-primary"
+						onClick="cartLS.add({id: 1, name: 'Car', price: 300})">Add to
+						Cart</button>
+				</div>
+			</div>
+			<div class="card mb-4 shadow-sm">
+				<div class="card-header">
+					<h4 class="my-0 font-weight-normal">Motorcycle</h4>
+				</div>
+				<div class="card-body">
+					<h1 class="card-title pricing-card-title">€150</h1>
+					<button type="button" class="btn btn-block btn-outline-primary"
+						onClick="cartLS.add({id: 2, name: 'Motorcycle', price: 150})">Add to
+						Cart</button>
+				</div>
+			</div>
+			<div class="card mb-4 shadow-sm">
+				<div class="card-header">
+					<h4 class="my-0 font-weight-normal">Bike</h4>
+				</div>
+				<div class="card-body">
+					<h1 class="card-title pricing-card-title">€100</h1>
+					<button type="button" class="btn btn-block btn-outline-primary"
+						onClick="cartLS.add({id: 3, name: 'Bike', price: 100})">Add to
+						Cart</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4 shadow-sm">
+			<div class="card-header">
+				<h2>Cart</h2>
+			</div>
+			<div class="card-body">
+				<table class="table">
+					<tbody class="cart">
+					</tbody>
+					<tfoot>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="text-right">Total: <strong class="total"></strong></td>
+						<td></td>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<center>
+		<div id="footer">
+			All copyrights are reserved for KillShot Developer Team: 
+			Rauf Hajiyev, Mahammad Mammadli, Emin Bayramov
+		</div>
+	</center>
+	<script>
+		function showModal() {
+	      var v = document.getElementById("mod");
+	         v.style.display = "block";
+   }
+   		function hideModal() {
+	      var v = document.getElementById("mod");
+	       v.style.display = "none";
+   }
+
+
+	    
+		function renderCart(items) {
+			const $cart = document.querySelector(".cart")
+			const $total = document.querySelector(".total")
+
+			$cart.innerHTML = items.map((item) => `
+					<tr>
+						<td>#${item.id}</td>
+						<td>${item.name}</td>
+						<td>${item.quantity}</td>
+						<td style="width: 60px;">	
+							<button type="button" class="btn btn-block btn-sm btn-outline-primary"
+								onClick="cartLS.quantity(${item.id},1)">+</button>
+						</td>
+						<td style="width: 60px;">	
+							<button type="button" class="btn btn-block btn-sm btn-outline-primary"
+								onClick="cartLS.quantity(${item.id},-1)">-</button>
+						</td>
+						<td class="text-right">$${item.price}</td>
+						<td class="text-right"><Button class="btn btn-primary" onClick="cartLS.remove(${item.id})">Delete</Button></td>
+					</tr>`).join("")
+
+			$total.innerHTML = "$" + cartLS.total()
+		}
+		renderCart(cartLS.list())
+		cartLS.onChange(renderCart)
+	</script>
+</body>
+
+</html>
